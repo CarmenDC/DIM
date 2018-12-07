@@ -1,8 +1,8 @@
 package descargaWeb;
 
-public abstract class Fichero implements Descargable, Comparable<Fichero>{ 
+public abstract class Fichero implements Comparable<Fichero>, Descargable, Buscable { 
 
-
+ 
 //	atributos
 	private static int idFichero;
 	int id;
@@ -25,9 +25,7 @@ public abstract class Fichero implements Descargable, Comparable<Fichero>{
 	double getSizeMB() {
 		return sizeMB;
 	}
-	void setSizeMB(int sizeMB) {
-		this.sizeMB = sizeMB;
-	}
+
 
 	//CONSTRUCTORES
 	Fichero(String titulo, double sizeMB) {
@@ -44,11 +42,21 @@ public abstract class Fichero implements Descargable, Comparable<Fichero>{
 		
 	}
 
-	
+	@Override
+	public Boolean BuscarTitulo(String Dato) {
+		Boolean encontrado = false;
+		if (getTitulo() == Dato) {
+			encontrado = true;
+		}
+		return encontrado;
+	}
+
+		
 	@Override
 	public String toString() {
 		return "id descarga =" + id + ", titulo=" + titulo + ", tamaño= " + sizeMB +"MB";
 	
 	}
 
+	
 }

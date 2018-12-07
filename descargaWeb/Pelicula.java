@@ -1,7 +1,7 @@
 package descargaWeb;
 
 
-public class Pelicula extends Fichero{
+public class Pelicula extends Fichero {
 
 //	ATRIBUTOS
 	
@@ -57,6 +57,15 @@ public class Pelicula extends Fichero{
 		return "Película: Id=" + id + " " + titulo + ", tamaño="+ sizeMB + "MB";
 	}
 
+	public Boolean Buscar(String Dato) {
+		Boolean encontrado = false;
+		if (getDirector() == Dato) {
+			encontrado = true;
+		}
+		return encontrado;
+	}
+	
+	
 	@Override
 	public int compareTo(Fichero o) {
 		int r = 0;
@@ -67,6 +76,21 @@ public class Pelicula extends Fichero{
 			r= 1;
 		}
 		return r;
+	}
+
+	@Override
+	public Boolean buscarArtista(String Dato) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Boolean buscarDirector(String Dato) {
+		Boolean encontrado = false;
+		if (getDirector() == Dato) {
+			encontrado = true;
+		}
+		return encontrado;
 	}
 
 

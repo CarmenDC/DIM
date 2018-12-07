@@ -2,8 +2,6 @@ package descargaWeb;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 public class AppDescargaWeb {
 
@@ -11,8 +9,11 @@ public class AppDescargaWeb {
 		//VARIABLES
 		Double velocidadConn = 5.0;
 		Collection<Fichero> listaFicheros = new ArrayList <Fichero>();
-		Collection<Fichero> listaDescarga = new ArrayList <Fichero>();
+		ListaDescarga listaDeDescarga = new ListaDescarga();
 		int[] listaElegida = new int[] {4,1,2,5}; //simula los números que se introducirían por pantalla de los IDs
+		String tituloBuscar = "La Roca";
+		String directorBuscar = "John Smith";
+		String artistaBuscar = "Bon Jovi";
 		
 		//DATOS 
 		Musica cancion1 = new Musica("We are the Champions", 4.3, "Queen");
@@ -43,39 +44,58 @@ public class AppDescargaWeb {
 		for (int ids : listaElegida) {
 			for (Fichero ficheros: listaFicheros) {
 				if (ids == ficheros.getId())
-					añadir (ficheros, listaDescarga);
-				}
+					listaDeDescarga.incluirEnLista(ficheros);
 		}
-		
-		
-		for (int i = 0; i<listaDescarga.size(); i++) {
-			System.out.print(((ArrayList<Fichero>) listaDescarga).get(i).toString());
-			System.out.println (", t descarga= " + ((ArrayList<Fichero>) listaDescarga).get(i).calcularTiempoDescarga(velocidadConn)+"s");
 		}
+		listaDeDescarga.imprimirLista();
+		
+//		for (int i = 0; i<listaDeDescarga.; i++) {
+//			System.out.print(((ArrayList<Fichero>) listaDeDescarga).get(i).toString());
+//			System.out.println (", t descarga= " + ((ArrayList<Fichero>) listaDeDescarga).get(i).calcularTiempoDescarga(velocidadConn)+"s");
+//		}
 		
 		//imprimimos informe con los ficheros ordenados por Id, damos el tamaño total de la descarga y el tiempo en descargar
 		System.out.println();
 		System.out.println ("Informe de Descarga:");
-		emitirInforme(listaDescarga, velocidadConn);
+		emitirInforme(listaDeDescarga, velocidadConn);
 
+		//BUSCAR EN LOS FICHEROS
+		System.out.println();
+		System.out.println ("Buscamos fichero con los siguientes datos: Título = " + tituloBuscar);
+		for (Fichero fichero : listaFicheros) {
+			if ( fichero.BuscarTitulo(tituloBuscar)) {
+				System.out.println (fichero.toString());
+			}
+		}
+		
+		System.out.println ("Buscamos fichero con los siguientes datos: Artista = " + artistaBuscar);
+		for (Fichero fichero : listaFicheros) {
+			if (fichero.buscarArtista(artistaBuscar)) {
+				System.out.println (fichero.toString());
+			}
+		}	
+	
+		System.out.println ("Buscamos fichero con los siguientes datos: Director = " + directorBuscar);
+		for (Fichero fichero : listaFicheros) {
+			if (fichero.buscarDirector(directorBuscar)) {
+				System.out.println (fichero.toString());
+			}
+		}	
+		
 	}
+	
+	
+	
+	
 
 	
 	// MÉTODOS
-	private static void añadir(Fichero ficheros, Collection<Fichero> listaDescarga) {
-		listaDescarga.add(ficheros);
-	}
-
-	private static void emitirInforme(Collection<Fichero> listaDescarga, double velocidadConexion) {
-		double tiempoTotalDesc=0.0;
-		double tamañoTotalDesc=0.0;
-		Collections.sort((List<Fichero>) listaDescarga);
-		for (Fichero ficheros: listaDescarga) {
-			tiempoTotalDesc += ficheros.calcularTiempoDescarga(velocidadConexion);
-			tamañoTotalDesc += ficheros.sizeMB;
-			System.out.println (ficheros.toString());
-			}
-
+	
+	private static void emitirInforme(ListaDescarga listaDeDescarga, double velocidadConexion) {
+		double tiempoTotalDesc= listaDeDescarga.calcularTiempoDescarga(velocidadConexion);
+		double tamañoTotalDesc = listaDeDescarga.getSizeDescarga();
+		listaDeDescarga.ordenarLista();
+		listaDeDescarga.imprimirLista();
 		System.out.println ("Tamaño total de descarga= " + tamañoTotalDesc + "MB" );
 		System.out.println ("Tiempo total de descarga= " + convertirTiempo (tiempoTotalDesc));
 		}

@@ -54,5 +54,23 @@ public class Musica extends Fichero {
 		return r;
 		}
 
+
+	@Override
+	public Boolean buscarArtista(String Dato) {
+		Boolean encontrado = false;
+		if (getArtista() == Dato) {
+			encontrado = true;
+		}
+		return encontrado;
+	}
+
+	@Override
+	public Boolean buscarDirector(String Dato) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	
+
 	
 }
