@@ -4,32 +4,38 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class AppDescargaWeb {
+	
+	static Collection<Fichero> listaFicheros = new ArrayList <Fichero>();
+
 
 	public static void main(String[] args) {
 		//VARIABLES
-		Double velocidadConn = 5.0;
-		Collection<Fichero> listaFicheros = new ArrayList <Fichero>();
+		Double velocidadConn = 2.0;
 		ListaDescarga listaDeDescarga = new ListaDescarga();
-		int[] listaElegida = new int[] {4,1,2,5}; //simula los números que se introducirían por pantalla de los IDs
-		String tituloBuscar = "La Roca";
-		String directorBuscar = "John Smith";
+		int[] listaElegida = new int[] {8,1,2,4}; //simula los números que se introducirían por pantalla de los IDs
+		String tituloBuscar = "Ruway";
+		String directorBuscar = "George Lucas";
 		String artistaBuscar = "Bon Jovi";
 		
 		//DATOS 
 		Musica cancion1 = new Musica("We are the Champions", 4.3, "Queen");
 		Musica cancion2 = new Musica("Love of my life", 3.7, "Queen");
 		Musica cancion3 = new Musica("Runaway", 4.3, "Bon Jovi");
+		Musica cancion4 = new Musica("Aviones Plateados", 5.8, "El Ultimo de la Fila" );
 		Pelicula pelicula1 = new Pelicula("Mision imposible", 10.4);
 		Pelicula pelicula2 = new Pelicula("La Roca", 7.3, "John Smith", new String[] {"Pepe", "Juan"});
 		Pelicula pelicula3 = new Pelicula("El Hobbit", 12.6);	
+		Pelicula pelicula4 = new Pelicula("La Guerra de las Galaxias", 9.3, "George Lucas", new String[] {"Harrison Ford", "Carrie Fisher"});		
 		
 		//INCLUYENDO DATOS EN COLLECION
 		listaFicheros.add(cancion1);
 		listaFicheros.add(cancion2);
 		listaFicheros.add(cancion3);
+		listaFicheros.add(cancion4);
 		listaFicheros.add(pelicula1);
 		listaFicheros.add(pelicula2);
 		listaFicheros.add(pelicula3);
+		listaFicheros.add(pelicula4);
 
 		
 		//COMIENZA EJECUCIÓN
@@ -49,12 +55,7 @@ public class AppDescargaWeb {
 		}
 		listaDeDescarga.imprimirLista();
 		
-//		for (int i = 0; i<listaDeDescarga.; i++) {
-//			System.out.print(((ArrayList<Fichero>) listaDeDescarga).get(i).toString());
-//			System.out.println (", t descarga= " + ((ArrayList<Fichero>) listaDeDescarga).get(i).calcularTiempoDescarga(velocidadConn)+"s");
-//		}
-		
-		//imprimimos informe con los ficheros ordenados por Id, damos el tamaño total de la descarga y el tiempo en descargar
+
 		System.out.println();
 		System.out.println ("Informe de Descarga:");
 		emitirInforme(listaDeDescarga, velocidadConn);
@@ -62,35 +63,36 @@ public class AppDescargaWeb {
 		//BUSCAR EN LOS FICHEROS
 		System.out.println();
 		System.out.println ("Buscamos fichero con los siguientes datos: Título = " + tituloBuscar);
-		for (Fichero fichero : listaFicheros) {
-			if ( fichero.BuscarTitulo(tituloBuscar)) {
-				System.out.println (fichero.toString());
-			}
-		}
-		
+		buscarDato (tituloBuscar);
 		System.out.println ("Buscamos fichero con los siguientes datos: Artista = " + artistaBuscar);
-		for (Fichero fichero : listaFicheros) {
-			if (fichero.buscarArtista(artistaBuscar)) {
-				System.out.println (fichero.toString());
-			}
-		}	
-	
+		buscarDato(artistaBuscar);
 		System.out.println ("Buscamos fichero con los siguientes datos: Director = " + directorBuscar);
-		for (Fichero fichero : listaFicheros) {
-			if (fichero.buscarDirector(directorBuscar)) {
-				System.out.println (fichero.toString());
-			}
-		}	
-		
+		buscarDato(directorBuscar);
 	}
 	
 	
 	
-	
-
-	
 	// MÉTODOS
 	
+	private static void buscarDato(String dato) {
+		for (Fichero fichero : listaFicheros) {
+			if ( fichero.BuscarTitulo(dato)) {
+				System.out.println (fichero.toString());
+			}
+			else { 
+				if ( fichero.buscarArtista(dato)) {
+					System.out.println (fichero.toString());
+					}
+				else {
+					if ( fichero.buscarDirector(dato)) {
+						System.out.println (fichero.toString());
+					}
+				}	
+			}
+		}
+	
+	}
+
 	private static void emitirInforme(ListaDescarga listaDeDescarga, double velocidadConexion) {
 		double tiempoTotalDesc= listaDeDescarga.calcularTiempoDescarga(velocidadConexion);
 		double tamañoTotalDesc = listaDeDescarga.getSizeDescarga();
